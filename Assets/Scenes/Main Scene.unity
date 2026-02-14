@@ -11183,38 +11183,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7587110840172688528, guid: a969cf418be425345918c3d754aa1114, type: 3}
   m_PrefabInstance: {fileID: 1355040985}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1359585047 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-  m_PrefabInstance: {fileID: 6293810701227296486}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1359585048 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3328040595161292726, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-  m_PrefabInstance: {fileID: 6293810701227296486}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1359585051
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1359585047}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 871c4962004663b4bb5bcdf0e72db5a4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1373209787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12312,8 +12280,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pathfinding
   debug: 0
   graph: {fileID: 2078883100}
-  start: {fileID: 1359585048}
-  goal: {fileID: 431098963}
   openPointPrefab: {fileID: 1294200121035956867, guid: 44160e0093d2c814ebc2fda3e37bdb1d, type: 3}
   closedPointPrefab: {fileID: 1294200121035956867, guid: 880ceb85e5f2bb54389b46e2a2869c4c, type: 3}
   pathPointPrefab: {fileID: 1294200121035956867, guid: c48a927c9875ac04c97cc64adc336280, type: 3}
@@ -17188,17 +17154,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6908151568127189073, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      propertyPath: maxDegreesDelta
-      value: 120
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1359585051}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -8,13 +8,11 @@ public class Pathfinding : MonoBehaviour
 
 	public delegate float Heuristic(Transform start, Transform end);
 
-	public Transform start;
-	public Transform goal;
 	public GameObject openPointPrefab;
 	public GameObject closedPointPrefab;
 	public GameObject pathPointPrefab;
 
-	public List<GridGraphNode> FindPath()
+	public List<GridGraphNode> FindPath(Transform start, Transform goal)
 	{
 		return FindPath(graph.nodeDict[graph.GetCoords(start)], graph.nodeDict[graph.GetCoords(goal)]);
 	}

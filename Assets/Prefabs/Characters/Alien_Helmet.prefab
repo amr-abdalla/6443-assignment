@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Alien_Helmet
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -78,6 +82,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6908151568127189073}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1891809438240674504}
   m_SourcePrefab: {fileID: 100100000, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
 --- !u!1 &2694353129949578508 stripped
 GameObject:
@@ -103,6 +110,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
+  goal: {fileID: 0}
 --- !u!114 &6908151568127189073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +124,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIAgent
   maxSpeed: 10
-  maxDegreesDelta: 90
+  maxDegreesDelta: 120
   lockY: 1
   debug: 0
+--- !u!95 &1891809438240674504
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694353129949578508}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 871c4962004663b4bb5bcdf0e72db5a4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

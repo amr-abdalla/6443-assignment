@@ -13,11 +13,12 @@ public class PathFollower : AIMovement
     private List<Vector3> smoothPath;
     private int currentWaypointIndex;
     private bool isFollowing;
+    public Transform goal;
 
     [Button]
     public void FollowPath()
     {
-        var rawPath = pathfinding.FindPath();
+        var rawPath = pathfinding.FindPath(transform, goal.transform);
         if (rawPath == null || rawPath.Count < 2)
             return;
 
