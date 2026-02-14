@@ -24,7 +24,8 @@ public class AIAgent : MonoBehaviour
 		GetKinematicAvg(out Vector3 average, out Quaternion rotation);
 		Velocity = average;
 		transform.position += Velocity * maxSpeed * Time.deltaTime;
-		transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, maxDegreesDelta * Time.deltaTime);
+		Quaternion targetRotation = Quaternion.LookRotation(Velocity.normalized);
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, maxDegreesDelta * Time.deltaTime);
 
 		animator.SetBool("running", Velocity.magnitude > 0);
 	}

@@ -15,7 +15,12 @@ public class PathFollower : AIMovement
     private bool isFollowing;
     public Transform goal;
 
-    [Button]
+	private void Start()
+	{
+        FollowPath();
+	}
+
+	[Button]
     public void FollowPath()
     {
         var rawPath = pathfinding.FindPath(transform, goal.transform);
