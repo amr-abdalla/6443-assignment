@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GridGraph : MonoBehaviour
 {
-	private Dictionary<Vector2Int, GridGraphNode> nodeDict = new Dictionary<Vector2Int, GridGraphNode>();
+	public Dictionary<Vector2Int, GridGraphNode> nodeDict = new Dictionary<Vector2Int, GridGraphNode>();
 	[SerializeField] public GridGraphNode nodePrefab;
 
 	public float generationGridCellSize = 1f;
@@ -29,9 +29,9 @@ public class GridGraph : MonoBehaviour
 		gameObject.DestroyChildren();
 	}
 
-	public Vector2Int GetCoords(GridGraphNode node)
+	public Vector2Int GetCoords(Transform node)
 	{
-		Vector3 delta = node.transform.position - transform.position;
+		Vector3 delta = node.position - transform.position;
 
 		return new Vector2Int(
 			Mathf.RoundToInt(delta.x / generationGridCellSize),
@@ -48,12 +48,12 @@ public class GridGraph : MonoBehaviour
 			n.adjacencyList.Remove(node);
 		}
 
-		nodeDict.Remove(GetCoords(node));
+		nodeDict.Remove(GetCoords(node.transform));
 	}
 
 	public void Add(GridGraphNode node)
 	{
-		Vector2Int coord = GetCoords(node);
+		Vector2Int coord = GetCoords(node.transform);
 
 		if (nodeDict.ContainsKey(coord))
 			return;
