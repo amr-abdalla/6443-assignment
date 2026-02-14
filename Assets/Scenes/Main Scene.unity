@@ -3809,8 +3809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   dragSpeed: 0.7
   zoomSpeed: 5
-  minZoom: 146
-  maxZoom: 169
+  maxZoom: 20
   minBounds: {x: -310, y: -350}
   maxBounds: {x: 150, y: 110}
 --- !u!1001 &348099494
@@ -5205,6 +5204,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6501975655319812262, guid: 8513fe6f9af07ed4b8ed908ddaaf94af, type: 3}
   m_PrefabInstance: {fileID: 429642039}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &431098962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431098963}
+  m_Layer: 0
+  m_Name: goal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &431098963
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431098962}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -250.2, y: 0, z: -347.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &431587891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5954,7 +5984,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1359585049}
   m_SourcePrefab: {fileID: 100100000, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
 --- !u!1001 &560144826
 PrefabInstance:
@@ -11226,6 +11259,34 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7587110840172688528, guid: a969cf418be425345918c3d754aa1114, type: 3}
   m_PrefabInstance: {fileID: 1355040985}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1359585047 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
+  m_PrefabInstance: {fileID: 559480258}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1359585048 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
+  m_PrefabInstance: {fileID: 559480258}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1359585049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359585047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9663c975b1ae44cad083a30398ba62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PathFollower
+  speed: 5
+  waypointTolerance: 0.05
+  pathfinding: {fileID: 1495950337}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1001 &1377119947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12219,6 +12280,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 428651939198905614, guid: b1b019ce11d2e3e4c8e0cce066f6fdd4, type: 3}
   m_PrefabInstance: {fileID: 1494233163}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1495950336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495950338}
+  - component: {fileID: 1495950337}
+  m_Layer: 0
+  m_Name: PF
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1495950337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495950336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc83904e2076f4541b3f0d5b2506110c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pathfinding
+  debug: 1
+  graph: {fileID: 2078883100}
+  start: {fileID: 1359585048}
+  goal: {fileID: 431098963}
+  openPointPrefab: {fileID: 1294200121035956867, guid: 44160e0093d2c814ebc2fda3e37bdb1d, type: 3}
+  closedPointPrefab: {fileID: 1294200121035956867, guid: 880ceb85e5f2bb54389b46e2a2869c4c, type: 3}
+  pathPointPrefab: {fileID: 1294200121035956867, guid: c48a927c9875ac04c97cc64adc336280, type: 3}
+--- !u!4 &1495950338
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495950336}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.05096, y: 0.00006, z: -39.80609}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1508569468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17031,3 +17143,5 @@ SceneRoots:
   - {fileID: 2078883101}
   - {fileID: 65274776}
   - {fileID: 264368468}
+  - {fileID: 1495950338}
+  - {fileID: 431098963}

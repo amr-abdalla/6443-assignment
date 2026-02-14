@@ -8,11 +8,16 @@ public class Pathfinding : MonoBehaviour
 
 	public delegate float Heuristic(Transform start, Transform end);
 
-	public GridGraphNode startNode;
-	public GridGraphNode goalNode;
+	public Transform start;
+	public Transform goal;
 	public GameObject openPointPrefab;
 	public GameObject closedPointPrefab;
 	public GameObject pathPointPrefab;
+
+	public List<GridGraphNode> FindPath()
+	{
+		return FindPath(graph.nodeDict[graph.GetCoords(start)], graph.nodeDict[graph.GetCoords(goal)]);
+	}
 
 	private float ManhattenDistance(Transform a, Transform b)
 	{
@@ -24,7 +29,7 @@ public class Pathfinding : MonoBehaviour
 		if (graph == null) return new List<GridGraphNode>();
 
 		// if no heuristic is provided then set heuristic = ManhattenDistance
-		if (heuristic == null) heuristic = (Transform s, Transform e) => ManhattenDistance(s,e);
+		if (heuristic == null) heuristic = (Transform s, Transform e) => ManhattenDistance(s, e);
 
 		List<GridGraphNode> path = null;
 		bool solutionFound = false;

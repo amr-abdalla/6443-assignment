@@ -9,8 +9,8 @@ public class CameraController : MonoBehaviour
 
 	[Header("Zoom")]
 	public float zoomSpeed = 0.1f;
-	public float minZoom = 5f;
 	public float maxZoom = 20f;
+	private Vector3 startPosition;
 
 	[Header("Bounds (X,Z World Space)")]
 	public Vector2 minBounds;
@@ -20,9 +20,10 @@ public class CameraController : MonoBehaviour
 	private Vector3 lastMouseWorldPos;
 	private bool isDragging;
 
-	void OnEnable()
+	private void Awake()
 	{
 		cam = GetComponent<Camera>();
+		startPosition = transform.position;
 	}
 
 	void Update()
@@ -100,12 +101,13 @@ public class CameraController : MonoBehaviour
 
 		Vector3 pos = transform.position;
 
-		if (scroll < 0 && pos.magnitude > maxZoom || scroll > 0 && pos.magnitude < minZoom)
+		if (Mathf.Abs(startPosition.y -  (pos + transform.forward * scroll * zoomSpeed).y) > maxZoom)
 		{
 			return;
 		}
 
 		pos += transform.forward * scroll * zoomSpeed;
+
 		transform.position = pos;
 	}
 

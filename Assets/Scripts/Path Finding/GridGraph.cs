@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,12 +16,6 @@ public class GridGraph : MonoBehaviour
 	private void Awake()
 	{
 		GenerateGrid();
-		GridGraphNode node1 = nodeDict[Vector2Int.zero];
-		GridGraphNode node2 = nodeDict[Vector2Int.up];
-		Remove(node1);
-		Remove(node2);
-		Add(node1);
-		Add(node2);
 	}
 
 	public void Clear()
@@ -83,6 +78,7 @@ public class GridGraph : MonoBehaviour
 		nodeDict.Add(coord, node);
 	}
 
+	[Button]
 	public void GenerateGrid(bool checkCollisions = true)
 	{
 		Clear();
