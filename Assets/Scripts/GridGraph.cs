@@ -1,148 +1,171 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Very quick basic graph implementation that was created to be used only for COMP 476 Lab on pathfinding.
-/// It is most likely not suitable for more practical use cases without modification.
-/// </summary>
 public class GridGraph : MonoBehaviour
 {
-	[SerializeField, HideInInspector] public List<GridGraphNode> nodes = new List<GridGraphNode>();
-	[SerializeField] public GameObject nodePrefab;
+	private Dictionary<Vector2Int, GridGraphNode> nodeDict = new Dictionary<Vector2Int, GridGraphNode>();
+	[SerializeField] public GridGraphNode nodePrefab;
 
 	public float generationGridCellSize = 1f;
-	public float collisionCheckRadius = 0.4f;
-	public float wallCheckDistance = 0.5f;
+	public float checkSphereRadius = 1f;
 	public LayerMask obstacleMask;
 
-	public int Count => nodes.Count;
+	public int Count => nodeDict.Count;
+
+	private void Awake()
+	{
+		GenerateGrid();
+		GridGraphNode node1 = nodeDict[Vector2Int.zero];
+		GridGraphNode node2 = nodeDict[Vector2Int.up];
+		Remove(node1);
+		Remove(node2);
+		Add(node1);
+		Add(node2);
+	}
 
 	public void Clear()
 	{
-		nodes.Clear();
+		nodeDict.Clear();
 		gameObject.DestroyChildren();
+	}
+
+	public Vector2Int GetCoords(GridGraphNode node)
+	{
+		Vector3 delta = node.transform.position - transform.position;
+
+		return new Vector2Int(
+			Mathf.RoundToInt(delta.x / generationGridCellSize),
+			Mathf.RoundToInt(delta.z / generationGridCellSize)
+		);
 	}
 
 	public void Remove(GridGraphNode node)
 	{
-		if (node == null || !nodes.Contains(node)) return;
+		if (node == null || !nodeDict.ContainsValue(node)) return;
 
 		foreach (GridGraphNode n in node.adjacencyList)
 		{
 			n.adjacencyList.Remove(node);
 		}
 
-		nodes.Remove(node);
+		nodeDict.Remove(GetCoords(node));
+	}
+
+	public void Add(GridGraphNode node)
+	{
+		Vector2Int coord = GetCoords(node);
+
+		if (nodeDict.ContainsKey(coord))
+			return;
+
+		node.adjacencyList.Clear();
+
+		Vector2Int[] directions =
+		{
+			new Vector2Int(1, 0),
+			new Vector2Int(-1, 0),
+			new Vector2Int(0, 1),
+			new Vector2Int(0, -1)
+		};
+
+		foreach (Vector2Int dir in directions)
+		{
+			Vector2Int neighborCoord = coord + dir;
+
+			if (!nodeDict.TryGetValue(neighborCoord, out GridGraphNode neighbor))
+				continue;
+
+			// Add connection both ways
+			node.adjacencyList.Add(neighbor);
+			neighbor.adjacencyList.Add(node);
+		}
+
+		nodeDict.Add(coord, node);
 	}
 
 	public void GenerateGrid(bool checkCollisions = true)
 	{
 		Clear();
 
-		List<List<GridGraphNode>> nodeGrid = new List<List<GridGraphNode>>();
+		Queue<Vector2Int> toProcess = new Queue<Vector2Int>();
 
 		Vector3 origin = new Vector3(transform.position.x, 0f, transform.position.z);
+		Vector2Int originCoord = Vector2Int.zero;
 
-		float step = generationGridCellSize;
+		// Create origin node
+		GridGraphNode originNode = Instantiate(nodePrefab, transform);
+		originNode.transform.position = origin;
+		originNode.transform.localScale *= generationGridCellSize;
 
-		// fill nodeGrid by checking steps and making sure there is no colliders between nodes.
+		nodeDict.Add(originCoord, originNode);
+		toProcess.Enqueue(originCoord);
 
-		// ---- Find bounds by probing in 4 directions ----
-		int minX = 0, maxX = 0;
-		int minZ = 0, maxZ = 0;
-
-		// Expand +X
-		while (!Physics.Raycast(origin + new Vector3(maxX * step, 0f, 0f),
-								 Vector3.right,
-								 wallCheckDistance,
-								 obstacleMask))
+		Vector2Int[] directions = new Vector2Int[]
 		{
-			maxX++;
-		}
+			new Vector2Int(1, 0),
+			new Vector2Int(-1, 0),
+			new Vector2Int(0, 1),
+			new Vector2Int(0, -1)
+		};
 
-		// Expand -X
-		while (!Physics.Raycast(origin + new Vector3(minX * step, 0f, 0f),
-								 Vector3.left,
-								 wallCheckDistance,
-								 obstacleMask))
+		while (toProcess.Count > 0)
 		{
-			minX--;
-		}
+			Vector2Int currentCoord = toProcess.Dequeue();
+			GridGraphNode currentNode = nodeDict[currentCoord];
 
-		// Expand +Z
-		while (!Physics.Raycast(origin + new Vector3(0f, 0f, maxZ * step),
-								 Vector3.forward,
-								 wallCheckDistance,
-								 obstacleMask))
-		{
-			maxZ++;
-		}
-
-		// Expand -Z
-		while (!Physics.Raycast(origin + new Vector3(0f, 0f, minZ * step),
-								 Vector3.back,
-								 wallCheckDistance,
-								 obstacleMask))
-		{
-			minZ--;
-		}
-
-		// ---- Generate nodes inside discovered bounds ----
-		for (int x = minX; x <= maxX; x++)
-		{
-			List<GridGraphNode> column = new List<GridGraphNode>();
-			nodeGrid.Add(column);
-
-			for (int z = minZ; z <= maxZ; z++)
+			foreach (Vector2Int dir in directions)
 			{
-				Vector3 worldPos = origin + new Vector3(x * step, 0f, z * step);
+				Vector2Int neighborCoord = currentCoord + dir;
 
-				bool blocked = false;
+				if (nodeDict.ContainsKey(neighborCoord))
+					continue;
 
-				if (checkCollisions)
-					blocked = Physics.CheckSphere(worldPos, collisionCheckRadius, obstacleMask);
+				Vector3 neighborPos = origin + new Vector3(neighborCoord.x * generationGridCellSize, 0f, neighborCoord.y * generationGridCellSize);
+
+				Vector3 currentPos = currentNode.transform.position;
+
+				bool blocked = checkCollisions && (Physics.Linecast(currentPos + Vector3.up, neighborPos + Vector3.up, obstacleMask) || Physics.CheckSphere(neighborPos, checkSphereRadius, obstacleMask));
 
 				if (!blocked)
 				{
-					GridGraphNode node = new GridGraphNode();
-					node.transform.position = worldPos; // assumes this exists
-					column.Add(node);
-				}
-				else
-				{
-					column.Add(null);
+					// Create neighbor node
+					GridGraphNode neighborNode = Instantiate(nodePrefab, transform);
+					neighborNode.transform.position = neighborPos;
+					neighborNode.transform.localScale *= generationGridCellSize;
+
+					nodeDict.Add(neighborCoord, neighborNode);
+					toProcess.Enqueue(neighborCoord);
 				}
 			}
 		}
 
-		// ---- Build adjacency (4-directional) ----
-		int width = nodeGrid.Count;
-		int height = nodeGrid[0].Count;
-
-		for (int x = 0; x < width; x++)
+		foreach (var kvp in nodeDict)
 		{
-			for (int z = 0; z < height; z++)
+			Vector2Int coord = kvp.Key;
+			GridGraphNode node = kvp.Value;
+			node.adjacencyList.Clear();
+
+			foreach (Vector2Int dir in directions)
 			{
-				GridGraphNode current = nodeGrid[x][z];
-				if (current == null) continue;
+				Vector2Int neighborCoord = coord + dir;
 
-				// Left
-				if (x > 0 && nodeGrid[x - 1][z] != null)
-					current.adjacencyList.Add(nodeGrid[x - 1][z]);
+				if (!nodeDict.TryGetValue(neighborCoord, out GridGraphNode neighbor))
+					continue;
 
-				// Right
-				if (x < width - 1 && nodeGrid[x + 1][z] != null)
-					current.adjacencyList.Add(nodeGrid[x + 1][z]);
+				// Prevent diagonal corner cutting
+				if (Mathf.Abs(dir.x) == 1 && Mathf.Abs(dir.y) == 1)
+				{
+					Vector2Int side1 = coord + new Vector2Int(dir.x, 0);
+					Vector2Int side2 = coord + new Vector2Int(0, dir.y);
 
-				// Down
-				if (z > 0 && nodeGrid[x][z - 1] != null)
-					current.adjacencyList.Add(nodeGrid[x][z - 1]);
+					if (!nodeDict.ContainsKey(side1) || !nodeDict.ContainsKey(side2))
+						continue;
+				}
 
-				// Up
-				if (z < height - 1 && nodeGrid[x][z + 1] != null)
-					current.adjacencyList.Add(nodeGrid[x][z + 1]);
+				node.adjacencyList.Add(neighbor);
 			}
 		}
+
 	}
 
 	public List<GridGraphNode> GetNeighbors(GridGraphNode node)
@@ -152,7 +175,6 @@ public class GridGraph : MonoBehaviour
 
 	#region grid_generation_properties
 
-#if UNITY_EDITOR
 	[Header("Gizmos")]
 	/// <summary>WARNING: This property is used by Gizmos only and is removed from the build. DO NOT reference it outside of Editor-Only code.</summary>
 	public float _nodeGizmoRadius = 0.5f;
@@ -161,10 +183,10 @@ public class GridGraph : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		if (nodes == null) return;
+		if (nodeDict == null) return;
 
 		// nodes
-		foreach (GridGraphNode node in nodes)
+		foreach (GridGraphNode node in nodeDict.Values)
 		{
 			if (node == null) continue;
 
@@ -179,6 +201,5 @@ public class GridGraph : MonoBehaviour
 			}
 		}
 	}
-#endif
 	#endregion
 }
