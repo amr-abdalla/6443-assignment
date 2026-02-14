@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathFollower : MonoBehaviour
+public class PathFollower : AIMovement
 {
     public float speed = 5f;
     public float waypointTolerance = 0.05f;
@@ -25,18 +25,23 @@ public class PathFollower : MonoBehaviour
         currentWaypointIndex = 0;
         isFollowing = true;
 
-        transform.position = smoothPath[0];
+        //transform.position = smoothPath[0];
     }
 
-    void Update()
+    public override SteeringOutput GetSteeringOutput(AIAgent agent)
     {
+        return new SteeringOutput { linear = GetTarget(), angular = GetAngular() };
+    }
+
+    Vector3 GetTarget()
+	{
         if (!isFollowing || smoothPath == null || smoothPath.Count == 0)
-            return;
+            return Vector3.zero;
 
         if (currentWaypointIndex >= smoothPath.Count)
         {
             isFollowing = false;
-            return;
+            return Vector3.zero;
         }
 
         Vector3 target = smoothPath[currentWaypointIndex];
@@ -48,20 +53,24 @@ public class PathFollower : MonoBehaviour
         if (distance < waypointTolerance)
         {
             currentWaypointIndex++;
-            return;
         }
 
-        Vector3 move = direction.normalized * speed * Time.deltaTime;
+        return direction.normalized;
+    }
 
-        // Clamp movement so we don't overshoot
-        if (move.magnitude > distance)
-            move = direction;
+    Quaternion GetAngular()
+	{
+        if (!isFollowing || smoothPath == null || smoothPath.Count == 0 || currentWaypointIndex >= smoothPath.Count)
+            return Quaternion.identity;
 
-        transform.position += move;
+        Vector3 target = smoothPath[currentWaypointIndex];
+        Vector3 direction = target - transform.position;
+        direction.y = 0f;
 
-        // Face movement direction
         if (direction.sqrMagnitude > 0.001f)
-            transform.forward = direction.normalized;
+            return Quaternion.LookRotation(direction.normalized);
+
+        return Quaternion.identity;
     }
 
     private List<Vector3> GetSmoothedPath(List<GridGraphNode> path)
