@@ -21,7 +21,7 @@ public class AIAgent : MonoBehaviour
 		if (debug)
 			Debug.DrawRay(transform.position, Velocity, Color.red);
 
-		GetKinematicAvg(out Vector3 average, out Quaternion rotation);
+		GetKinematicAvg(out Vector3 average);
 		Velocity = average;
 		transform.position += Velocity * maxSpeed * Time.deltaTime;
 		Quaternion targetRotation = Quaternion.LookRotation(Velocity.normalized);
@@ -30,16 +30,14 @@ public class AIAgent : MonoBehaviour
 		animator.SetBool("running", Velocity.magnitude > 0);
 	}
 
-	private void GetKinematicAvg(out Vector3 kinematicAvg, out Quaternion rotation)
+	private void GetKinematicAvg(out Vector3 kinematicAvg)
 	{
 		kinematicAvg = Vector3.zero;
-		Vector3 eulerAvg = Vector3.zero;
 		AIMovement[] movements = GetComponents<AIMovement>();
 		int count = 0;
 		foreach (AIMovement movement in movements)
 		{
-			kinematicAvg += movement.GetSteeringOutput(this).linear;
-			eulerAvg += movement.GetSteeringOutput(this).angular.eulerAngles;
+			kinematicAvg += movement.GetSteeringOutput(this);
 
 			++count;
 		}
@@ -47,13 +45,10 @@ public class AIAgent : MonoBehaviour
 		if (count > 0)
 		{
 			kinematicAvg /= count;
-			eulerAvg /= count;
-			rotation = Quaternion.Euler(eulerAvg);
 		}
 		else
 		{
 			kinematicAvg = Velocity;
-			rotation = transform.rotation;
 		}
 	}
 

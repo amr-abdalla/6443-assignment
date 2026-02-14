@@ -8,6 +8,7 @@ public class PathFollower : AIMovement
     public float waypointTolerance = 0.05f;
 
     [SerializeField] private Pathfinding pathfinding;
+    [SerializeField] private Arrive arrive;
     public LayerMask obstacleMask;
 
     private List<Vector3> smoothPath;
@@ -34,9 +35,9 @@ public class PathFollower : AIMovement
         //transform.position = smoothPath[0];
     }
 
-    public override SteeringOutput GetSteeringOutput(AIAgent agent)
+    public override Vector3 GetSteeringOutput(AIAgent agent)
     {
-        return new SteeringOutput { linear = GetTarget(), angular = GetAngular() };
+        return GetTarget();
     }
 
     Vector3 GetTarget()
@@ -47,6 +48,7 @@ public class PathFollower : AIMovement
         if (currentWaypointIndex >= smoothPath.Count)
         {
             isFollowing = false;
+            arrive.target = goal;
             return Vector3.zero;
         }
 
@@ -62,21 +64,6 @@ public class PathFollower : AIMovement
         }
 
         return direction.normalized;
-    }
-
-    Quaternion GetAngular()
-	{
-        if (!isFollowing || smoothPath == null || smoothPath.Count == 0 || currentWaypointIndex >= smoothPath.Count)
-            return Quaternion.identity;
-
-        Vector3 target = smoothPath[currentWaypointIndex];
-        Vector3 direction = target - transform.position;
-        direction.y = 0f;
-
-        if (direction.sqrMagnitude > 0.001f)
-            return Quaternion.LookRotation(direction.normalized);
-
-        return Quaternion.identity;
     }
 
     private List<Vector3> GetSmoothedPath(List<GridGraphNode> path)
