@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,12 @@ public class Pathfinding : MonoBehaviour
 
 	public List<GridGraphNode> FindPath(Transform start, Transform goal)
 	{
-		return FindPath(graph.nodeDict[graph.GetCoords(start)], graph.nodeDict[graph.GetCoords(goal)]);
+		if (!graph.nodeDict.TryGetValue(graph.GetCoords(goal), out GridGraphNode goalNode))
+		{
+			return null;
+		}
+
+		return FindPath(graph.nodeDict[graph.GetCoords(start)], goalNode);
 	}
 
 	private float ManhattenDistance(Transform a, Transform b)
