@@ -385,9 +385,6 @@ PrefabInstance:
       addedObject: {fileID: 2346287013743230783}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6908151568127189073}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1891809438240674504}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
       insertIndex: -1
@@ -404,6 +401,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5990525109915572784}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8224203355059501824}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4289162394821520973}
   m_SourcePrefab: {fileID: 100100000, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}
 --- !u!1 &2694353129949578508 stripped
 GameObject:
@@ -425,27 +428,9 @@ MonoBehaviour:
   speed: 1
   waypointTolerance: 0.5
   pathfinding: {fileID: 0}
-  arrive: {fileID: 7164048723944763343}
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
-  goal: {fileID: 0}
---- !u!114 &6908151568127189073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2694353129949578508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cd891611b52ca7489448bf40b828652, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AIAgent
-  maxSpeed: 100
-  maxDegreesDelta: 120
-  lockY: 1
-  debug: 1
 --- !u!95 &1891809438240674504
 Animator:
   serializedVersion: 7
@@ -511,8 +496,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 0
   m_ImplicitTensor: 0
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -561,6 +546,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentHealth
   stats: {fileID: 11400000, guid: 62700a7800b20c14cbe56b1a49b3c82a, type: 2}
+--- !u!114 &8224203355059501824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694353129949578508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77c995760e08b30499976bbec0e2b6b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIMover
+  maxSpeed: 25
+  maxDegreesDelta: 110
+  lockY: 1
+  debug: 0
+  decisionMaker: {fileID: 4289162394821520973}
+--- !u!114 &4289162394821520973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694353129949578508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf5627e21aac3a49b1fa8fa5be09e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIAgentDecisionMaker
+  health: {fileID: 5990525109915572784}
+  arrive: {fileID: 7164048723944763343}
+  pathFollower: {fileID: 2346287013743230783}
+  occupiedCover: {fileID: 0}
+  coverMask:
+    serializedVersion: 2
+    m_Bits: 1
+  detectionRadius: 60
 --- !u!4 &3328040595161292726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}

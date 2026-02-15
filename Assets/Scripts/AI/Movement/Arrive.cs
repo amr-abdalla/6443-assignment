@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
 
 public class Arrive : AIMovement
 {
 	public Transform target;
 	public float stopDistance = 0.1f;
+	public Action OnGoalReached;
 
-	public override Vector3 GetSteeringOutput(AIAgent agent)
+	public override Vector3 GetSteeringOutput(AIAgentDecisionMaker agent)
 	{
 		if (target == null)
 		{
@@ -26,7 +28,9 @@ public class Arrive : AIMovement
 	{
 		if (target.TryGetComponent(out Cover cover))
 		{
-			cover.Occupy(GetComponent<AIAgent>());
+			cover.Occupy(GetComponent<AIAgentDecisionMaker>());
 		}
+
+		OnGoalReached?.Invoke();
 	}
 }

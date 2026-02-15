@@ -7,7 +7,7 @@ public class AvoidNeighbors : AIMovement
 	public LayerMask neighborMask;
 	[Range(0, 180)] public float visionCone= 120f;
 
-	public override Vector3 GetSteeringOutput(AIAgent agent)
+	public override Vector3 GetSteeringOutput(AIAgentDecisionMaker agent)
 	{
 		return Avoidance(GetNeighborContext());
 	}

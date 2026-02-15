@@ -7,28 +7,30 @@ public class Cover : MonoBehaviour
     [SerializeField] private GameObject coverSphere;
 
     private GridGraphNode correspondingNode;
-    private AIAgent occupiedAgent;
+    private AIAgentDecisionMaker occupiedAgent;
 
-    public bool IsOccupied => occupiedAgent != null;
+    public bool IsOccupied() => occupiedAgent != null;
 
-    public bool IsActive => IsOccupied;
+    public bool IsActive() => IsOccupied();
 
     // TODO: Change to be after generating graph
 	private void Start()
 	{
-        correspondingNode = findOccupiedNode();
+        correspondingNode = FindOccupiedNode();
+        GameStatsManager.Instance.AddCover(this);
 	}
 
-	public void Occupy(AIAgent aIAgent)
+	public void Occupy(AIAgentDecisionMaker aIAgent)
 	{
         occupiedAgent = aIAgent;
+        aIAgent.occupiedCover = this;
         gameObject.layer = GetFirstLayer(obstacleLayer);
 
         GridGraph.Instance.Remove(correspondingNode);
         coverSphere.SetActive(true);
     }
 
-    public void Unoccupy(AIAgent aIAgent)
+    public void Unoccupy(AIAgentDecisionMaker aIAgent)
     {
         if (occupiedAgent != aIAgent)
         {
@@ -37,6 +39,7 @@ public class Cover : MonoBehaviour
         }
 
         occupiedAgent = null;
+        aIAgent.occupiedCover = null;
         gameObject.layer = GetFirstLayer(defaultLayer);
         GridGraph.Instance.Add(correspondingNode);
         coverSphere.SetActive(false);
@@ -52,7 +55,7 @@ public class Cover : MonoBehaviour
         return -1;
     }
 
-    private GridGraphNode findOccupiedNode()
+    private GridGraphNode FindOccupiedNode()
 	{
         Vector2Int coords = GridGraph.Instance.GetCoords(transform);
 
@@ -63,16 +66,5 @@ public class Cover : MonoBehaviour
 
         return null;
 	}
-
-
-    private void OnCollisionExit(Collision other)
-    {
-        Transform otherTransform = other.transform;
-
-        if (otherTransform.TryGetComponent(out AIAgent aIAgent) && occupiedAgent == aIAgent)
-		{
-            Unoccupy(aIAgent);
-		}
-    }
 
 }

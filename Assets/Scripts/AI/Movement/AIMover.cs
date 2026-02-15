@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AIAgent : MonoBehaviour
+public class AIMover : MonoBehaviour
 {
 	public float maxSpeed;
 	public float maxDegreesDelta;
@@ -8,7 +8,7 @@ public class AIAgent : MonoBehaviour
 	public bool debug;
 
 	private Animator animator;
-
+	[SerializeField] private AIAgentDecisionMaker decisionMaker;
 	public Vector3 Velocity { get; set; }
 
 	private void Awake()
@@ -43,7 +43,7 @@ public class AIAgent : MonoBehaviour
 		int count = 0;
 		foreach (AIMovement movement in movements)
 		{
-			kinematicAvg += movement.GetSteeringOutput(this);
+			kinematicAvg += movement.GetSteeringOutput(decisionMaker);
 
 			++count;
 		}

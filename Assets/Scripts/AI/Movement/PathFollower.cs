@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,54 +7,60 @@ public class PathFollower : AIMovement
 	public float waypointTolerance = 0.05f;
 
 	[SerializeField] private Pathfinding pathfinding;
-	[SerializeField] private Arrive arrive;
 	public LayerMask obstacleMask;
 
 	private List<Vector3> smoothPath;
 	private int currentWaypointIndex;
 	private bool isFollowing;
-	public Transform goal;
 
 	private void Start()
 	{
-		FollowPath();
-		GridGraph.Instance.OnGridChanged += OnGridChanged;
+		//StartFollowingPath();
+		//GridGraph.Instance.OnGridChanged += OnGridChanged;
 	}
 
-	private void OnGridChanged()
-	{
-		if (!isFollowing || smoothPath == null || smoothPath.Count == 0 || goal == null)
-		{
-			return;
-		}
+	//private void OnGridChanged()
+	//{
+	//	if (!isFollowing || smoothPath == null || smoothPath.Count == 0 || decisionMaker.currentGoal == null)
+	//	{
+	//		return;
+	//	}
 
-		if (!FollowPath())
-		{
-			goal = null;
-			isFollowing = false;
-		}
-	}
+	//	if (!FollowPath())
+	//	{
+	//		decisionMaker.SetGoal();
+	//		isFollowing = false;
+	//	}
+	//}
 
-	[Button]
-	public bool FollowPath()
+	public bool TrySetPath(Transform goal)
 	{
-		var rawPath = pathfinding.FindPath(transform, goal.transform);
+		var rawPath = pathfinding.FindPath(transform, goal);
 		if (rawPath == null || rawPath.Count < 2)
 			return false;
 
 		smoothPath = GetSmoothedPath(rawPath);
-		currentWaypointIndex = 0;
-		isFollowing = true;
-
 		return true;
 	}
 
-	public override Vector3 GetSteeringOutput(AIAgent agent)
+
+	public void StartFollowingPath()
 	{
-		return GetTarget();
+		if (smoothPath == null || smoothPath.Count == 0)
+		{
+			return;
+		}
+
+		currentWaypointIndex = 0;
+		isFollowing = true;
 	}
 
-	Vector3 GetTarget()
+	public override Vector3 GetSteeringOutput(AIAgentDecisionMaker agent)
+	{
+		return GetTarget(agent);
+	}
+
+	Vector3 GetTarget(AIAgentDecisionMaker agent)
 	{
 		if (!isFollowing || smoothPath == null || smoothPath.Count == 0)
 			return Vector3.zero;
@@ -63,8 +68,7 @@ public class PathFollower : AIMovement
 		if (currentWaypointIndex >= smoothPath.Count)
 		{
 			isFollowing = false;
-			arrive.target = goal;
-			goal = null;
+			agent.ArriveToGoal();
 			return Vector3.zero;
 		}
 
