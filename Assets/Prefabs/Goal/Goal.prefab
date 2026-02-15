@@ -117,6 +117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86ec9f09eb7d8544b15c6ba61829993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoalTrigger
-  obstacleMask:
+  characterLayer:
     serializedVersion: 2
     m_Bits: 128

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class GoalTrigger : MonoBehaviour
 {
-	public LayerMask obstacleMask;
+	public LayerMask characterLayer;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (IsInLayerMask(other.gameObject, obstacleMask))
+        if (IsInLayerMask(other.gameObject, characterLayer))
         {
             Destroy(other.gameObject);
         }

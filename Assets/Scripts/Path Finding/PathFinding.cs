@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pathfinding : MonoBehaviour
 {
 	public bool debug;
-	[SerializeField] private GridGraph graph;
+	private GridGraph Graph => GridGraph.Instance;
 
 	public delegate float Heuristic(Transform start, Transform end);
 
@@ -15,12 +15,12 @@ public class Pathfinding : MonoBehaviour
 
 	public List<GridGraphNode> FindPath(Transform start, Transform goal)
 	{
-		if (!graph.nodeDict.TryGetValue(graph.GetCoords(goal), out GridGraphNode goalNode))
+		if (!Graph.nodeDict.TryGetValue(Graph.GetCoords(goal), out GridGraphNode goalNode))
 		{
 			return null;
 		}
 
-		return FindPath(graph.nodeDict[graph.GetCoords(start)], goalNode);
+		return FindPath(Graph.nodeDict[Graph.GetCoords(start)], goalNode);
 	}
 
 	private float ManhattenDistance(Transform a, Transform b)
@@ -30,7 +30,7 @@ public class Pathfinding : MonoBehaviour
 
 	public List<GridGraphNode> FindPath(GridGraphNode start, GridGraphNode goal, Heuristic heuristic = null, bool isAdmissible = true)
 	{
-		if (graph == null) return new List<GridGraphNode>();
+		if (Graph == null) return new List<GridGraphNode>();
 
 		// if no heuristic is provided then set heuristic = ManhattenDistance
 		if (heuristic == null) heuristic = (Transform s, Transform e) => ManhattenDistance(s, e);
@@ -87,7 +87,7 @@ public class Pathfinding : MonoBehaviour
 				if (pathIsTheShortest) break;
 			}
 
-			List<GridGraphNode> neighbors = graph.GetNeighbors(current);
+			List<GridGraphNode> neighbors = Graph.GetNeighbors(current);
 			foreach (GridGraphNode n in neighbors)
 			{
 				// the edge cost
@@ -205,7 +205,7 @@ public class Pathfinding : MonoBehaviour
 
 	private void ClearPoints()
 	{
-		foreach (GridGraphNode node in graph.nodeDict.Values)
+		foreach (GridGraphNode node in Graph.nodeDict.Values)
 		{
 			node._nodeGizmoColor = new Color(Color.white.r, Color.white.g, Color.white.b, 0.5f);
 			for (int c = 0; c < node.transform.childCount; ++c)

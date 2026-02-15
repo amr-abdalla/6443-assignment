@@ -14,6 +14,7 @@ public class Arrive : AIMovement
 
 		if (Vector3.Distance(agent.transform.position, target.position) <= stopDistance)
 		{
+			OnArrive();
 			target = null;
 			return Vector3.zero;
 		}
@@ -21,4 +22,11 @@ public class Arrive : AIMovement
 		return (target.position - agent.transform.position).normalized;
 	}
 
+	private void OnArrive()
+	{
+		if (target.TryGetComponent(out Cover cover))
+		{
+			cover.Occupy(GetComponent<AIAgent>());
+		}
+	}
 }

@@ -1,8 +1,8 @@
-using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridGraph : MonoBehaviour
+public class GridGraph : Singleton<GridGraph>
 {
 	public Dictionary<Vector2Int, GridGraphNode> nodeDict = new Dictionary<Vector2Int, GridGraphNode>();
 	[SerializeField] public GridGraphNode nodePrefab;
@@ -10,11 +10,13 @@ public class GridGraph : MonoBehaviour
 	public float generationGridCellSize = 1f;
 	public float checkSphereRadius = 1f;
 	public LayerMask obstacleMask;
+	public Action OnGridChanged;
 
 	public int Count => nodeDict.Count;
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		GenerateGrid();
 	}
 
@@ -44,6 +46,7 @@ public class GridGraph : MonoBehaviour
 		}
 
 		nodeDict.Remove(GetCoords(node.transform));
+		OnGridChanged?.Invoke();
 	}
 
 	public void Add(GridGraphNode node)
@@ -76,9 +79,9 @@ public class GridGraph : MonoBehaviour
 		}
 
 		nodeDict.Add(coord, node);
+		OnGridChanged?.Invoke();
 	}
 
-	[Button]
 	public void GenerateGrid(bool checkCollisions = true)
 	{
 		Clear();
