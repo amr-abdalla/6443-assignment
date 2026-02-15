@@ -532,7 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arrive
   target: {fileID: 0}
-  stopDistance: 0.1
+  stopDistance: 1
 --- !u!114 &5990525109915572784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,6 +583,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   detectionRadius: 60
+  squadAI: {fileID: 0}
 --- !u!4 &3328040595161292726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f9fddd73c22f95041b1c183615d1bb99, type: 3}

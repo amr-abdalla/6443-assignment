@@ -79,7 +79,6 @@ public class GridGraph : Singleton<GridGraph>
 		}
 
 		nodeDict.Add(coord, node);
-		OnGridChanged?.Invoke();
 	}
 
 	public void GenerateGrid(bool checkCollisions = true)

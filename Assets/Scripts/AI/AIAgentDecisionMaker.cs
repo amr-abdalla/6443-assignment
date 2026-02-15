@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,35 +13,63 @@ public class AIAgentDecisionMaker : MonoBehaviour
 	public Transform currentGoal { get; private set; }
 	[SerializeField] private LayerMask coverMask;
 	[SerializeField] private float detectionRadius;
+	public SquadAI squadAI;
 
 	private void Start()
 	{
 		GridGraph.Instance.OnGridChanged += SetGoal;
+		arrive.OnGoalReached += OnGoalReached;
+	}
+
+	private void OnGoalReached()
+	{
+		currentGoal = null;
+		squadAI.CheckIfAllMembersFinished();
 	}
 
 	private void OnDestroy()
 	{
 		GridGraph.Instance.OnGridChanged -= SetGoal;
+		arrive.OnGoalReached -= OnGoalReached;
+		squadAI.RemoveMember(this);
+		squadAI.CheckIfAllMembersFinished();
 	}
 
 	[Button]
-	public void SetNewGoal()
+	public void SetNewGoal(List<Cover> bookedCovers)
 	{
 		if (occupiedCover != null)
 		{
 			occupiedCover.Unoccupy(this);
 		}
-		else
-		{
-			SetGoal();
-		}
+
+		currentGoal = null;
+		SetGoal(bookedCovers);
+		
 	}
 
 	public void SetGoal()
 	{
+		if (currentGoal != null)
+		{
+			TryAssignGoal(currentGoal);
+			return;
+		}
+
+		SetGoal(squadAI.bookedCovers);
+	}
+
+
+	public void SetGoal(List<Cover> bookedCovers)
+	{
 		if (occupiedCover != null)
 		{
 			return;
+		}
+
+		if (currentGoal != null)
+		{
+			TryAssignGoal(currentGoal);
 		}
 
 		AgentStats.HealthStatus healthStatus = health.GetHealthStatus();
@@ -50,16 +79,16 @@ public class AIAgentDecisionMaker : MonoBehaviour
 
 		if (healthStatus == AgentStats.HealthStatus.Good)
 		{
-			HandleGoodHealth(directionToGoal);
+			HandleGoodHealth(directionToGoal, bookedCovers);
 		}
 		else if (healthStatus == AgentStats.HealthStatus.Mid)
 		{
-			HandleGoodHealth(directionToGoal);
+			HandleGoodHealth(directionToGoal, bookedCovers);
 			//TODO
 		}
 		else if (healthStatus == AgentStats.HealthStatus.Low)
 		{
-			HandleGoodHealth(directionToGoal);
+			HandleGoodHealth(directionToGoal, bookedCovers);
 			//TODO
 		}
 
@@ -69,16 +98,16 @@ public class AIAgentDecisionMaker : MonoBehaviour
 		}
 	}
 
-	private void HandleGoodHealth(Vector3 directionToGoal)
+	private void HandleGoodHealth(Vector3 directionToGoal, List<Cover> bookedCovers)
 	{
-		IOrderedEnumerable<Cover> coversInRadius = DetectFrontCoversInRadius(directionToGoal).OrderByDescending(c => Vector3.Distance(GameStatsManager.Instance.GetGoal().position, c.transform.position));
+		IOrderedEnumerable<Cover> coversInRadius = DetectFrontCoversInRadius(directionToGoal).Except(bookedCovers).OrderByDescending(c => Vector3.Distance(GameStatsManager.Instance.GetGoal().position, c.transform.position));
 
 		if (TryAssignGoal(coversInRadius))
 		{
 			return;
 		}
 
-		var allFrontCovers = DetectAllFrontCovers(directionToGoal);
+		var allFrontCovers = DetectAllFrontCovers(directionToGoal).Except(bookedCovers);
 
 		var otherFrontCovers = allFrontCovers.Except(coversInRadius);
 
@@ -92,7 +121,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 			return;
 		}
 
-		IEnumerable<Cover> otherCovers = GameStatsManager.Instance.allCovers.Except(allFrontCovers);
+		IEnumerable<Cover> otherCovers = GameStatsManager.Instance.allCovers.Except(allFrontCovers).Except(bookedCovers);
 
 		if (TryAssignGoal(otherCovers))
 		{
