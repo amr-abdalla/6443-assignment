@@ -11767,43 +11767,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7587110840172688528, guid: a969cf418be425345918c3d754aa1114, type: 3}
   m_PrefabInstance: {fileID: 1355040985}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1359585047 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-  m_PrefabInstance: {fileID: 6293810701227296486}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1359585054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1359585047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4026f84614e734fa56a5e3a8b1c48b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AvoidNeighbors
-  avoidanceRadius: 10
-  neighborRadius: 5
-  neighborMask:
-    serializedVersion: 2
-    m_Bits: 128
-  visionCone: 110
---- !u!114 &1359585055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1359585047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 435037d191e78d744a3f1a13b8fd2f08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Arrive
-  target: {fileID: 0}
-  stopDistance: 0.1
 --- !u!1001 &1373209787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18007,24 +17970,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 429696372}
     - target: {fileID: 2346287013743230783, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      propertyPath: arrive
-      value: 
-      objectReference: {fileID: 1359585055}
-    - target: {fileID: 2346287013743230783, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: pathfinding
       value: 
       objectReference: {fileID: 1495950337}
-    - target: {fileID: 2346287013743230783, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      propertyPath: waypointTolerance
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_Name
       value: Alien_Helmet
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3328040595161292726, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18066,40 +18017,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4104633285693627093, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
+    - target: {fileID: 6490417069571947859, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6463742930367142501, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6463742930367142501, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 6463742930367142501, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      propertyPath: m_IsKinematic
+    - target: {fileID: 6490417069571947859, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6908151568127189073, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      propertyPath: debug
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6908151568127189073, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      propertyPath: maxSpeed
-      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1359585054}
-    - targetCorrespondingSourceObject: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1359585055}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
 --- !u!1001 &7168176252046604140
 PrefabInstance:

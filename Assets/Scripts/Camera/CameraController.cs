@@ -5,10 +5,10 @@ using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {
 	[Header("Drag")]
-	public float dragSpeed = 1f;
+	public float dragSpeed = 0.7f;
 
 	[Header("Zoom")]
-	public float zoomSpeed = 0.1f;
+	public float zoomSpeed = 5f;
 	public float maxZoom = 20f;
 	private Vector3 startPosition;
 
