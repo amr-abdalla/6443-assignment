@@ -14,6 +14,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 	[SerializeField] private LayerMask coverMask;
 	[SerializeField] private float detectionRadius;
 	public SquadAI squadAI;
+	public bool isSearchingForGoal = false;
 
 	private void Start()
 	{
@@ -50,6 +51,11 @@ public class AIAgentDecisionMaker : MonoBehaviour
 
 	public void SetGoal()
 	{
+		if (!isSearchingForGoal)
+		{
+			return;
+		}
+
 		if (currentGoal != null)
 		{
 			TryAssignGoal(currentGoal);
