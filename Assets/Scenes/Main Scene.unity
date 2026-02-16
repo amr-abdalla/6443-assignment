@@ -4559,7 +4559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3328040595161292726, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4607,11 +4607,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6490417069571947859, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6490417069571947859, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6908151568127189073, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: maxSpeed
@@ -4657,6 +4657,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   visionCone: 110
+--- !u!114 &354167481 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4289162394821520973, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
+  m_PrefabInstance: {fileID: 354167477}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354167479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf5627e21aac3a49b1fa8fa5be09e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIAgentDecisionMaker
 --- !u!1001 &357018965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7436,7 +7447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3328040595161292726, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7484,11 +7495,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6490417069571947859, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6490417069571947859, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6908151568127189073, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: maxSpeed
@@ -7534,6 +7545,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   visionCone: 110
+--- !u!114 &563656156 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4289162394821520973, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
+  m_PrefabInstance: {fileID: 563656152}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563656154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf5627e21aac3a49b1fa8fa5be09e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIAgentDecisionMaker
 --- !u!1001 &564467468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10081,7 +10103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3328040595161292726, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_LocalScale.x
@@ -10145,11 +10167,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6490417069571947859, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6490417069571947859, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8224203355059501824, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: maxSpeed
@@ -10165,6 +10187,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3328040595161292726, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
   m_PrefabInstance: {fileID: 894218553}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &894218555 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4289162394821520973, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
+  m_PrefabInstance: {fileID: 894218553}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf5627e21aac3a49b1fa8fa5be09e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIAgentDecisionMaker
 --- !u!1001 &895149354
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10855,6 +10888,10 @@ MonoBehaviour:
   members:
   - {fileID: 1922582076}
   - {fileID: 1890166004}
+  - {fileID: 1500686424}
+  - {fileID: 894218555}
+  - {fileID: 563656156}
+  - {fileID: 354167481}
   finishedCount: 0
 --- !u!4 &927939132
 Transform:
@@ -15484,7 +15521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2694353129949578508, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3328040595161292726, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15532,11 +15569,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6490417069571947859, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6490417069571947859, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6908151568127189073, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
       propertyPath: maxSpeed
@@ -15582,6 +15619,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3328040595161292726, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
   m_PrefabInstance: {fileID: 1500686411}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1500686424 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4289162394821520973, guid: 318602a19bcf5f34f8e62ff250c5482c, type: 3}
+  m_PrefabInstance: {fileID: 1500686411}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500686412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf5627e21aac3a49b1fa8fa5be09e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIAgentDecisionMaker
 --- !u!1001 &1508569468
 PrefabInstance:
   m_ObjectHideFlags: 0

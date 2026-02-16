@@ -5,19 +5,24 @@ public class TurretController : MonoBehaviour
 	[SerializeField] private float range;
 	[SerializeField] private float cooldown;
 	[SerializeField] private LayerMask characterMask;
+	[SerializeField] private TurretBullet bulletPrefab;
+	[SerializeField] private Transform bulletSpawnPoint;
+
 	private AIAgentDecisionMaker currentTarget;
 	private float lastHitTime;
 
-	private void Start()
-	{
-		lastHitTime = -cooldown;
-	}
-
 	private void Update()
 	{
-		if (currentTarget == null && !TryUpdateTarget())
+		if (currentTarget == null)
 		{
-			return;
+			if (TryUpdateTarget())
+			{
+				lastHitTime = Time.time;
+			}
+			else
+			{
+				return;
+			}
 		}
 
 		float sqrDistance = (currentTarget.transform.position - transform.position).sqrMagnitude;
@@ -28,7 +33,10 @@ public class TurretController : MonoBehaviour
 			return;
 		}
 
-		transform.rotation = Quaternion.LookRotation((currentTarget.transform.position - transform.position).normalized);
+		AIMover aIMover = currentTarget.GetComponent<AIMover>();
+		Vector3 predictedPos = currentTarget.transform.position + aIMover.Velocity * aIMover.maxSpeed * Time.deltaTime;
+
+		transform.rotation = Quaternion.LookRotation((predictedPos - transform.position).normalized);
 
 		if (Time.time - lastHitTime >= cooldown)
 		{
@@ -39,7 +47,8 @@ public class TurretController : MonoBehaviour
 
 	private void Shoot()
 	{
-		Debug.Log("Turret shot " + currentTarget.name);
+		TurretBullet bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+		bullet.Fire(transform.forward);
 	}
 
 	private bool TryUpdateTarget()
