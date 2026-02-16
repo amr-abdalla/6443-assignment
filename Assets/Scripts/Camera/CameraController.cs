@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
 	{
 		if (Mouse.current == null) return;
 
-		if (Draggable.isDragging) return;
+		if (Draggable.currentlyDragging != null) return;
 
 		if (Mouse.current.leftButton.wasPressedThisFrame)
 		{

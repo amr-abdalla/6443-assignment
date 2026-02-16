@@ -14,12 +14,6 @@ public class GridGraph : Singleton<GridGraph>
 
 	public int Count => nodeDict.Count;
 
-	protected override void Awake()
-	{
-		base.Awake();
-		GenerateGrid();
-	}
-
 	public void Clear()
 	{
 		nodeDict.Clear();

@@ -31,7 +31,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		if (currentGoal.TryGetComponent(out Cover cover))
+		if (currentGoal != null && currentGoal.TryGetComponent(out Cover cover))
 		{
 			cover.isBooked = false;
 		}

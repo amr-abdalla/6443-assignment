@@ -1,15 +1,14 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SquadsManager : MonoBehaviour
+public class SquadsManager : Singleton<SquadsManager>
 {
 	[SerializeField] private List<SquadAI> squads;
 	private int currentMovingSquad = -1;
 
-	void Start()
+	public void StartSimulation()
 	{
-		foreach(SquadAI squad in squads)
+		foreach (SquadAI squad in squads)
 		{
 			squad.OnFinishMoving += OnSquadFinishMoving;
 			squad.OnSquadEmptied += OnSquadEmptied;

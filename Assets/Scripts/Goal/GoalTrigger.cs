@@ -9,6 +9,7 @@ public class GoalTrigger : MonoBehaviour
         if (IsInLayerMask(other.gameObject, characterLayer))
         {
             Destroy(other.gameObject);
+            GameStatsManager.Instance.SurvivalCount++;
         }
     }
 

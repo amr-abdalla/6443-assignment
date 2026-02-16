@@ -34,6 +34,7 @@ public class AgentHealth : MonoBehaviour
 
 	private void Die()
 	{
+		GameStatsManager.Instance.DeathCount++;
 		Destroy(gameObject);
 	}
 
