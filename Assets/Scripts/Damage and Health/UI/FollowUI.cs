@@ -30,14 +30,6 @@ public class FollowUI : MonoBehaviour
 
 		Vector3 worldPosition = target.position + worldOffset;
 		Vector3 screenPosition = worldCamera.WorldToScreenPoint(worldPosition);
-
-		if (screenPosition.z < 0)
-		{
-			gameObject.SetActive(false);
-			return;
-		}
-
-		gameObject.SetActive(true);
 		rectTransform.position = screenPosition;
 
 		float distance = Vector3.Distance(worldCamera.transform.position, target.position);
