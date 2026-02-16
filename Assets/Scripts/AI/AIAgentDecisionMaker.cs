@@ -1,5 +1,4 @@
 using NaughtyAttributes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,6 +14,8 @@ public class AIAgentDecisionMaker : MonoBehaviour
 	[SerializeField] private float detectionRadius;
 	public SquadAI squadAI;
 	public bool isSearchingForGoal = false;
+
+	public bool IsCovered() => occupiedCover != null;
 
 	private void Start()
 	{
@@ -39,7 +40,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 	[Button]
 	public void SetNewGoal()
 	{
-		if (occupiedCover != null)
+		if (IsCovered())
 		{
 			occupiedCover.Unoccupy(this);
 		}
@@ -52,7 +53,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 
 	public void SetGoal()
 	{
-		if (!isSearchingForGoal || occupiedCover != null)
+		if (!isSearchingForGoal || IsCovered())
 		{
 			return;
 		}
@@ -73,7 +74,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 		}
 
 		AgentStats.HealthStatus healthStatus = health.GetHealthStatus();
-		Transform finalGoal = GameStatsManager.Instance.GetGoal(); 
+		Transform finalGoal = GameStatsManager.Instance.GetGoal();
 		Vector3 directionToGoal = (finalGoal.position - transform.position).normalized;
 
 
