@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class Draggable : MonoBehaviour
 {
 	private Camera mainCamera;
-	public static Draggable currentlyDragging;
+	private bool isDragging;
 
 	private Plane dragPlane;
 	private Vector3 offset;
@@ -24,14 +24,14 @@ public class Draggable : MonoBehaviour
 			TryStartDrag();
 		}
 
-		if (Mouse.current.leftButton.isPressed && currentlyDragging == this)
+		if (Mouse.current.leftButton.isPressed && isDragging)
 		{
 			Drag();
 		}
 
 		if (Mouse.current.leftButton.wasReleasedThisFrame)
 		{
-			currentlyDragging = null;
+			isDragging = false;
 		}
 	}
 
@@ -43,7 +43,7 @@ public class Draggable : MonoBehaviour
 		{
 			if (hit.transform == transform)
 			{
-				currentlyDragging = this;
+				isDragging = true;
 
 				dragPlane = new Plane(Vector3.up, Vector3.zero);
 
@@ -70,4 +70,5 @@ public class Draggable : MonoBehaviour
 			transform.position = newPosition;
 		}
 	}
+
 }

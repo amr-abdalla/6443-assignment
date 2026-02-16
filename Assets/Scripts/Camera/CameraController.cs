@@ -1,7 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-[ExecuteAlways]
 public class CameraController : MonoBehaviour
 {
 	[Header("Drag")]
@@ -34,18 +33,22 @@ public class CameraController : MonoBehaviour
 		HandleZoom();
 	}
 
-	// =========================
-	// DRAG MOVEMENT
-	// =========================
-
 	void HandleDrag()
 	{
 		if (Mouse.current == null) return;
 
-		if (Draggable.currentlyDragging != null) return;
-
 		if (Mouse.current.leftButton.wasPressedThisFrame)
 		{
+			Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+			if (Physics.Raycast(ray, out RaycastHit hit))
+			{
+				if (hit.transform.GetComponent<Draggable>() != null)
+				{
+					return;
+				}
+			}
+
 			isDragging = true;
 			lastMouseWorldPos = GetMouseWorldPosition();
 		}
@@ -62,7 +65,6 @@ public class CameraController : MonoBehaviour
 
 			Vector3 newPosition = transform.position + delta * dragSpeed;
 
-			// Clamp inside bounds
 			newPosition.x = Mathf.Clamp(newPosition.x, minBounds.x, maxBounds.x);
 			newPosition.z = Mathf.Clamp(newPosition.z, minBounds.y, maxBounds.y);
 
@@ -72,7 +74,6 @@ public class CameraController : MonoBehaviour
 		}
 	}
 
-	// Convert mouse screen position to world point on XZ plane
 	Vector3 GetMouseWorldPosition()
 	{
 		Vector2 mousePos = Mouse.current.position.ReadValue();
@@ -88,10 +89,6 @@ public class CameraController : MonoBehaviour
 		return Vector3.zero;
 	}
 
-	// =========================
-	// ZOOM
-	// =========================
-
 	void HandleZoom()
 	{
 		if (Mouse.current == null) return;
@@ -103,7 +100,7 @@ public class CameraController : MonoBehaviour
 
 		Vector3 pos = transform.position;
 
-		if (Mathf.Abs(startPosition.y -  (pos + transform.forward * scroll * zoomSpeed).y) > maxZoom)
+		if (Mathf.Abs(startPosition.y - (pos + transform.forward * scroll * zoomSpeed).y) > maxZoom)
 		{
 			return;
 		}
@@ -112,10 +109,6 @@ public class CameraController : MonoBehaviour
 
 		transform.position = pos;
 	}
-
-	// =========================
-	// GIZMOS
-	// =========================
 
 	void OnDrawGizmos()
 	{

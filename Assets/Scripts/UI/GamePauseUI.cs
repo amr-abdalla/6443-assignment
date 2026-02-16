@@ -11,6 +11,7 @@ public class GamePauseUI : MonoBehaviour
 	private void Awake()
 	{
 		canPause = true;
+		Time.timeScale = 1;
 	}
 
 	private void OnEnable()

@@ -34,9 +34,8 @@ public class SquadsManager : Singleton<SquadsManager>
 	{
 		if (squads.Count == 0)
 		{
-			gameCompleteUI.SetActive(true);
+			gameCompleteUI?.SetActive(true);
 			GamePauseUI.canPause = false;
-			Time.timeScale = 0;
 			return;
 		}
 
