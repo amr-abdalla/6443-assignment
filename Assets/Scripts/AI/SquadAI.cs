@@ -5,7 +5,6 @@ using UnityEngine;
 public class SquadAI : MonoBehaviour
 {
 	[SerializeField] private List<AIAgentDecisionMaker> members;
-	public List<Cover> bookedCovers = new List<Cover>();
 	public int finishedCount = 0;
 	public Action OnFinishMoving;
 	public Action<SquadAI> OnSquadEmptied;
@@ -20,17 +19,9 @@ public class SquadAI : MonoBehaviour
 
 	public void StartMoving()
 	{
-		bookedCovers.Clear();
-
 		foreach (AIAgentDecisionMaker aIAgent in members)
 		{
-			aIAgent.isSearchingForGoal = true;
-			aIAgent.SetNewGoal(bookedCovers);
-
-			if (aIAgent.currentGoal.TryGetComponent(out Cover cover))
-			{
-				bookedCovers.Add(cover);
-			}
+			aIAgent.SetNewGoal();
 		}
 
 	}

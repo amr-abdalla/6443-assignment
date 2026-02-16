@@ -14,7 +14,6 @@ public class AIAgentDecisionMaker : MonoBehaviour
 	[SerializeField] private LayerMask coverMask;
 	[SerializeField] private float detectionRadius;
 	public SquadAI squadAI;
-	public bool isSearchingForGoal = false;
 
 	private void Start()
 	{
@@ -37,7 +36,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 	}
 
 	[Button]
-	public void SetNewGoal(List<Cover> bookedCovers)
+	public void SetNewGoal()
 	{
 		if (occupiedCover != null)
 		{
@@ -45,28 +44,11 @@ public class AIAgentDecisionMaker : MonoBehaviour
 		}
 
 		currentGoal = null;
-		SetGoal(bookedCovers);
+		SetGoal();
 		
 	}
 
 	public void SetGoal()
-	{
-		if (!isSearchingForGoal)
-		{
-			return;
-		}
-
-		if (currentGoal != null)
-		{
-			TryAssignGoal(currentGoal);
-			return;
-		}
-
-		SetGoal(squadAI.bookedCovers);
-	}
-
-
-	public void SetGoal(List<Cover> bookedCovers)
 	{
 		if (occupiedCover != null)
 		{
@@ -75,7 +57,17 @@ public class AIAgentDecisionMaker : MonoBehaviour
 
 		if (currentGoal != null)
 		{
-			TryAssignGoal(currentGoal);
+			if (TryAssignGoal(currentGoal))
+			{
+				return;
+			}
+
+			if (currentGoal.TryGetComponent(out Cover cover))
+			{
+				cover.isBooked = false;
+			}
+
+			currentGoal = null;
 		}
 
 		AgentStats.HealthStatus healthStatus = health.GetHealthStatus();
@@ -85,16 +77,16 @@ public class AIAgentDecisionMaker : MonoBehaviour
 
 		if (healthStatus == AgentStats.HealthStatus.Good)
 		{
-			HandleGoodHealth(directionToGoal, bookedCovers);
+			HandleGoodHealth(directionToGoal);
 		}
 		else if (healthStatus == AgentStats.HealthStatus.Mid)
 		{
-			HandleGoodHealth(directionToGoal, bookedCovers);
+			HandleGoodHealth(directionToGoal);
 			//TODO
 		}
 		else if (healthStatus == AgentStats.HealthStatus.Low)
 		{
-			HandleGoodHealth(directionToGoal, bookedCovers);
+			HandleGoodHealth(directionToGoal);
 			//TODO
 		}
 
@@ -104,18 +96,18 @@ public class AIAgentDecisionMaker : MonoBehaviour
 		}
 	}
 
-	private void HandleGoodHealth(Vector3 directionToGoal, List<Cover> bookedCovers)
+	private void HandleGoodHealth(Vector3 directionToGoal)
 	{
-		IOrderedEnumerable<Cover> coversInRadius = DetectFrontCoversInRadius(directionToGoal).Except(bookedCovers).OrderByDescending(c => Vector3.Distance(GameStatsManager.Instance.GetGoal().position, c.transform.position));
+		IOrderedEnumerable<Cover> coversInRadius = DetectFrontCoversInRadius(directionToGoal).OrderBy(c => Vector3.Distance(GameStatsManager.Instance.GetGoal().position, c.transform.position));
 
 		if (TryAssignGoal(coversInRadius))
 		{
 			return;
 		}
 
-		var allFrontCovers = DetectAllFrontCovers(directionToGoal).Except(bookedCovers);
+		var allFrontCovers = DetectAllFrontCovers(directionToGoal);
 
-		var otherFrontCovers = allFrontCovers.Except(coversInRadius);
+		var otherFrontCovers = allFrontCovers.Except(coversInRadius).OrderByDescending(c => Vector3.Distance(GameStatsManager.Instance.GetGoal().position, c.transform.position));
 
 		if (TryAssignGoal(otherFrontCovers))
 		{
@@ -127,7 +119,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 			return;
 		}
 
-		IEnumerable<Cover> otherCovers = GameStatsManager.Instance.allCovers.Except(allFrontCovers).Except(bookedCovers);
+		IEnumerable<Cover> otherCovers = GameStatsManager.Instance.allCovers.Except(allFrontCovers);
 
 		if (TryAssignGoal(otherCovers))
 		{
@@ -176,8 +168,9 @@ public class AIAgentDecisionMaker : MonoBehaviour
 	{
 		foreach (var cover in covers)
 		{
-			if (pathFollower.TrySetPath(cover.transform))
+			if (cover.IsActive() && pathFollower.TrySetPath(cover.transform))
 			{
+				cover.isBooked = true;
 				currentGoal = cover.transform;
 				StartFollowingPath();
 				return true;

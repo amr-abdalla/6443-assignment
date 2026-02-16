@@ -8,10 +8,11 @@ public class Cover : MonoBehaviour
 
     private GridGraphNode correspondingNode;
     private AIAgentDecisionMaker occupiedAgent;
+    public bool isBooked = false;
 
     public bool IsOccupied() => occupiedAgent != null;
 
-    public bool IsActive() => IsOccupied();
+    public bool IsActive() => !IsOccupied() && !isBooked;
 
     // TODO: Change to be after generating graph
 	private void Start()
@@ -22,6 +23,7 @@ public class Cover : MonoBehaviour
 
 	public void Occupy(AIAgentDecisionMaker aIAgent)
 	{
+        isBooked = false;
         occupiedAgent = aIAgent;
         aIAgent.occupiedCover = this;
         gameObject.layer = GetFirstLayer(obstacleLayer);
