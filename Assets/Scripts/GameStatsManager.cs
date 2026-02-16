@@ -10,6 +10,7 @@ public class GameStatsManager : Singleton<GameStatsManager>
 	{
 		base.Awake();
 		allCovers = new List<Cover>();
+		Time.timeScale = 2f;
 	}
 
 	public void AddCover(Cover cover)

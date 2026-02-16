@@ -582,7 +582,7 @@ MonoBehaviour:
   coverMask:
     serializedVersion: 2
     m_Bits: 1
-  detectionRadius: 60
+  detectionRadius: 40
   squadAI: {fileID: 0}
   isSearchingForGoal: 0
 --- !u!4 &3328040595161292726 stripped

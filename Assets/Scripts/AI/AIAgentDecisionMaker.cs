@@ -31,6 +31,11 @@ public class AIAgentDecisionMaker : MonoBehaviour
 
 	private void OnDestroy()
 	{
+		if (currentGoal.TryGetComponent(out Cover cover))
+		{
+			cover.isBooked = false;
+		}
+
 		GridGraph.Instance.OnGridChanged -= SetGoal;
 		arrive.OnGoalReached -= OnGoalReached;
 		squadAI.RemoveMember(this);
@@ -101,6 +106,16 @@ public class AIAgentDecisionMaker : MonoBehaviour
 
 	private void HandleGoodHealth(Vector3 directionToGoal)
 	{
+		Transform finalGoal = GameStatsManager.Instance.GetGoal();
+
+		if (Vector3.Distance(finalGoal.position, transform.position) <= 50f)
+		{
+			if (TryAssignGoal(finalGoal))
+			{
+				return;
+			}
+		}
+
 		IOrderedEnumerable<Cover> coversInRadius = DetectFrontCoversInRadius(directionToGoal).OrderBy(c => Vector3.Distance(GameStatsManager.Instance.GetGoal().position, c.transform.position));
 
 		if (TryAssignGoal(coversInRadius))
@@ -117,7 +132,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 			return;
 		}
 
-		if (TryAssignGoal(GameStatsManager.Instance.GetGoal()))
+		if (TryAssignGoal(finalGoal))
 		{
 			return;
 		}

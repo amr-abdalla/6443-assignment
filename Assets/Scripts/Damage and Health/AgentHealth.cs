@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using System;
 using UnityEngine;
 
@@ -7,12 +6,6 @@ public class AgentHealth : MonoBehaviour
     [SerializeField] private AgentStats stats;
     private float currentHP;
 	public Action<float, float> OnHealthChanged;
-
-	[Button]
-	public void TakeTestDamage()
-	{
-		TakeDamage(20);
-	}
 
 	private void Start()
 	{
@@ -29,6 +22,12 @@ public class AgentHealth : MonoBehaviour
 		{
 			Die();
 		}
+	}
+
+	public void Heal(float healAmount)
+	{
+		currentHP = MathF.Min(currentHP + healAmount, stats.GetMaxHP());
+		OnHealthChanged?.Invoke(currentHP, stats.GetMaxHP());
 	}
 
 	public AgentStats.HealthStatus GetHealthStatus() => stats.GetHealthStatus(currentHP);

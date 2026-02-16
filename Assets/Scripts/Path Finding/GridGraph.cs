@@ -46,7 +46,7 @@ public class GridGraph : Singleton<GridGraph>
 		}
 
 		nodeDict.Remove(GetCoords(node.transform));
-		OnGridChanged?.Invoke();
+		//OnGridChanged?.Invoke();
 	}
 
 	public void Add(GridGraphNode node)

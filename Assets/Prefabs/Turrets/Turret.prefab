@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurretController
   range: 50
-  cooldown: 1
+  cooldown: 1.2
   characterMask:
     serializedVersion: 2
     m_Bits: 128

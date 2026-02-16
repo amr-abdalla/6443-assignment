@@ -6,6 +6,7 @@ public class Cover : MonoBehaviour
     [SerializeField] private LayerMask defaultLayer;
     [SerializeField] private GameObject coverSphere;
 
+    private const float _HealAmount = 40f;
     private GridGraphNode correspondingNode;
     private AIAgentDecisionMaker occupiedAgent;
     public bool isBooked = false;
@@ -26,6 +27,7 @@ public class Cover : MonoBehaviour
         isBooked = false;
         occupiedAgent = aIAgent;
         aIAgent.occupiedCover = this;
+        aIAgent.GetComponent<AgentHealth>().Heal(_HealAmount);
         gameObject.layer = GetFirstLayer(obstacleLayer);
 
         GridGraph.Instance.Remove(correspondingNode);

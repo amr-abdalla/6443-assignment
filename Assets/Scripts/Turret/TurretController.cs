@@ -33,10 +33,7 @@ public class TurretController : MonoBehaviour
 			return;
 		}
 
-		AIMover aIMover = currentTarget.GetComponent<AIMover>();
-		Vector3 predictedPos = currentTarget.transform.position + aIMover.Velocity * aIMover.maxSpeed * Time.deltaTime;
-
-		transform.rotation = Quaternion.LookRotation((predictedPos - transform.position).normalized);
+		transform.rotation = Quaternion.LookRotation((currentTarget.transform.position - transform.position).normalized);
 
 		if (Time.time - lastHitTime >= cooldown)
 		{
@@ -48,7 +45,8 @@ public class TurretController : MonoBehaviour
 	private void Shoot()
 	{
 		TurretBullet bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-		bullet.Fire(transform.forward);
+
+		bullet.Fire((currentTarget.transform.position + currentTarget.transform.forward + Vector3.up * 2f - bullet.transform.position).normalized);
 	}
 
 	private bool TryUpdateTarget()
