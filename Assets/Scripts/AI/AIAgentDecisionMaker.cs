@@ -14,6 +14,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 	[SerializeField] private LayerMask coverMask;
 	[SerializeField] private float detectionRadius;
 	public SquadAI squadAI;
+	public bool isSearchingForGoal = false;
 
 	private void Start()
 	{
@@ -44,13 +45,14 @@ public class AIAgentDecisionMaker : MonoBehaviour
 		}
 
 		currentGoal = null;
+		isSearchingForGoal = true;
 		SetGoal();
-		
+
 	}
 
 	public void SetGoal()
 	{
-		if (occupiedCover != null)
+		if (!isSearchingForGoal || occupiedCover != null)
 		{
 			return;
 		}
@@ -171,6 +173,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 			if (cover.IsActive() && pathFollower.TrySetPath(cover.transform))
 			{
 				cover.isBooked = true;
+				isSearchingForGoal = false;
 				currentGoal = cover.transform;
 				StartFollowingPath();
 				return true;
@@ -184,6 +187,7 @@ public class AIAgentDecisionMaker : MonoBehaviour
 	{
 		if (pathFollower.TrySetPath(target))
 		{
+			isSearchingForGoal = false;
 			currentGoal = target;
 			StartFollowingPath();
 			return true;

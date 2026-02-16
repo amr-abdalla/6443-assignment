@@ -241,6 +241,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   coverSphere: {fileID: 7030839084280121266}
+  isBooked: 0
 --- !u!114 &8733719511188798025
 MonoBehaviour:
   m_ObjectHideFlags: 0

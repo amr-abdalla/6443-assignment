@@ -29,6 +29,7 @@ public class AIMover : MonoBehaviour
 		if (Velocity != Vector3.zero)
 		{
 			targetRotation = Quaternion.LookRotation(Velocity.normalized);
+			targetRotation = new Quaternion(0, targetRotation.y, targetRotation.z, targetRotation.w);
 		}
 
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, maxDegreesDelta * Time.deltaTime);

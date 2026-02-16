@@ -99,8 +99,8 @@ public class PathFollower : AIMovement
 		while (next < path.Count)
 		{
 			bool blocked = Physics.Linecast(
-				path[current].transform.position + Vector3.up,
-				path[next].transform.position + Vector3.up,
+				path[current].transform.position + Vector3.up * 2f,
+				path[next].transform.position + Vector3.up * 2f,
 				obstacleMask
 			);
 

@@ -9,7 +9,7 @@ public class AvoidNeighbors : AIMovement
 
 	public override Vector3 GetSteeringOutput(AIAgentDecisionMaker agent)
 	{
-		return Avoidance(GetNeighborContext());
+        return Avoidance(GetNeighborContext());
 	}
 
 	public Collider[] GetNeighborContext()
