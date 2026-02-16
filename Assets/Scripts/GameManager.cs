@@ -1,7 +1,8 @@
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameSimulationManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
 	[Button]
 	public void StartSimulation()
@@ -9,5 +10,16 @@ public class GameSimulationManager : MonoBehaviour
 		GridGraph.Instance.GenerateGrid();
 		GameStatsManager.Instance.initCovers();
 		SquadsManager.Instance.StartSimulation();
+	}
+
+	[Button]
+	public void RestartLevel()
+	{
+		SceneManager.LoadScene(0);
+	}
+
+	public void ExitGame()
+	{
+		Application.Quit();
 	}
 }

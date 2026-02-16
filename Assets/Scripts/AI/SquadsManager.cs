@@ -4,6 +4,7 @@ using UnityEngine;
 public class SquadsManager : Singleton<SquadsManager>
 {
 	[SerializeField] private List<SquadAI> squads;
+	[SerializeField] private GameObject gameCompleteUI;
 	private int currentMovingSquad = -1;
 
 	public void StartSimulation()
@@ -33,7 +34,9 @@ public class SquadsManager : Singleton<SquadsManager>
 	{
 		if (squads.Count == 0)
 		{
-			Debug.Log("Game Complete");
+			gameCompleteUI.SetActive(true);
+			GamePauseUI.canPause = false;
+			Time.timeScale = 0;
 			return;
 		}
 
